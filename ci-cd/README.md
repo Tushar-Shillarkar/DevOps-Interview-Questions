@@ -1,616 +1,615 @@
-# **CI/CD - DevOps Interview Questions**  
+# **CI/CD & GitOps - DevOps Interview Questions (200 Questions)**
 
-## **Beginner Level (1-20 Questions)**  
-
-### **1. What is CI/CD in DevOps?**  
-
-**Answer:**  
-CI/CD stands for **Continuous Integration (CI) and Continuous Deployment (CD)**.  
-
-- **CI (Continuous Integration):** Developers frequently merge code into a shared repository, and automated tests are run to catch issues early.  
-- **CD (Continuous Deployment/Delivery):** Automates the deployment of software.  
-  - **Continuous Delivery:** Requires manual approval before deployment.  
-  - **Continuous Deployment:** Fully automated, no manual intervention.  
-
-### **2. What are the benefits of using CI/CD?**  
-
-**Answer:**  
-
-- **Faster Releases:** Automates software delivery.  
-- **Early Bug Detection:** Runs tests automatically on new code.  
-- **Improved Collaboration:** Developers merge code frequently, reducing integration issues.  
-- **Consistent Deployments:** Eliminates manual errors with automated builds and releases.  
-
-### **3. What are some popular CI/CD tools?**  
-
-**Answer:**  
-
-- **Jenkins** – Open-source, highly customizable.  
-- **GitHub Actions** – Integrated with GitHub.  
-- **GitLab CI/CD** – Built-in with GitLab.  
-- **CircleCI, Travis CI** – Cloud-based solutions.  
-- **Azure DevOps Pipelines, AWS CodePipeline** – Cloud-native CI/CD.  
-
-### **4. What is a CI pipeline?**  
-
-**Answer:**  
-A **CI pipeline** is an automated workflow that builds, tests, and validates new code before merging it into production.  
-
-- Steps: **Code Commit → Build → Test → Artifact Storage → Deployment**  
-- Example tools: **Jenkinsfile, GitHub Actions YAML, GitLab CI/CD YAML**  
-
-### **5. What is a build artifact in CI/CD?**  
-
-**Answer:**  
-A **build artifact** is a compiled and packaged version of code ready for deployment.  
-
-- Examples:  
-  - **JAR, WAR, or ZIP files** for Java projects  
-  - **Docker images** for containerized applications  
-
-### **6. How does source control work in CI/CD?**  
-
-**Answer:**  
-Source control (e.g., **Git**) helps track changes in code.  
-
-- Developers push code to repositories (**GitHub, GitLab, Bitbucket**).  
-- CI/CD tools trigger **automated builds and tests** on new commits.  
-
-### **7. What is the purpose of unit tests in CI/CD?**  
-
-**Answer:**  
-Unit tests validate **individual components of code** to catch early-stage bugs.  
-
-- Tools: **JUnit, pytest, Mocha, Jest**  
-- Example:  
-
-  ```python
-  def add(x, y):
-      return x + y
-  
-  def test_add():
-      assert add(2, 3) == 5
-  ```  
-
-### **8. What is versioning in CI/CD?**  
-
-**Answer:**  
-Versioning assigns unique numbers to each software release to track changes.  
-
-- **Semantic Versioning (SemVer):** **MAJOR.MINOR.PATCH** (e.g., **1.2.3**)  
-- **Git Tags:** CI/CD pipelines deploy specific versions using tags.  
-
-### **9. What is a rollback in CI/CD?**  
-
-**Answer:**  
-A rollback reverts to a previous stable release when the new deployment fails.  
-
-- Example: Rolling back an application using Kubernetes:  
-
-  ```sh
-  kubectl rollout undo deployment my-app
-  ```  
-
-### **10. What is a canary deployment?**  
-
-**Answer:**  
-Canary deployment releases new changes to a **subset of users** before full deployment.  
-
-- Example: **Deploy to 10% of users → Monitor logs → Full release**  
+Welcome to the **CI/CD & GitOps** master collection containing **200 comprehensive interview questions and detailed answers** covering Continuous Integration, Continuous Delivery, GitHub Actions, GitLab CI, Jenkins, ArgoCD, Flux, Tekton, Progressive Delivery, and Supply Chain Security.
 
 ---
 
-## **Intermediate Level (21-40 Questions)**  
+## 🟢 **Part 1: CI/CD Fundamentals & Workflows (Questions 1–50)**
 
-### **21. What is the difference between GitHub Actions and GitLab CI/CD?**  
+### **1. What is CI/CD and what core problems does it solve?**
+**Answer:** CI/CD stands for Continuous Integration and Continuous Delivery/Deployment. It automates the building, testing, packaging, and deployment of software to eliminate manual human errors, reduce release cycle times from months to minutes, catch integration bugs early, and ensure code in `main` is always production-ready.
 
-**Answer:**  
+### **2. What is Continuous Integration (CI)?**
+**Answer:** The practice where developers frequently commit code to a shared repository (multiple times daily). Each commit triggers automated builds, linters, and unit/integration tests to provide immediate feedback on code health.
 
-| Feature | GitHub Actions | GitLab CI/CD |
-|---------|--------------|--------------|
-| **Integration** | Best with GitHub | Best with GitLab |
-| **Configuration** | `.github/workflows/*.yml` | `.gitlab-ci.yml` |
-| **Runners** | GitHub-hosted & self-hosted | GitLab Runners |
-| **Container Support** | Uses Docker containers | Strong native container support |
+### **3. What is Continuous Delivery (CD)?**
+**Answer:** An extension of CI where code is automatically built, tested, and staged in a production-ready state. Deploying to live production requires an explicit manual business approval (e.g., clicking a button).
 
-### **22. How do you trigger a Jenkins pipeline?**  
+### **4. What is Continuous Deployment (CD)?**
+**Answer:** The fully automated release practice where every commit that passes all automated pipeline tests is deployed directly into production with zero human intervention.
 
-**Answer:**  
-Jenkins pipelines can be triggered using:  
+### **5. What are the key stages of a production CI/CD pipeline?**
+**Answer:** 1. Source Trigger (webhook), 2. Static Analysis & Linting (SAST, secret scanning), 3. Build & Compilation, 4. Unit & Integration Testing, 5. Artifact Packaging & Signing (Docker, SBOM, Cosign), 6. Staging Deployment & DAST/E2E Testing, 7. Production Progressive Rollout (Canary/GitOps).
 
-- **Webhooks:** Automatically triggered by a Git commit.  
-- **Cron Jobs:** Run at scheduled times.  
-- **Manually:** Click ‘Build Now’ in Jenkins UI.  
+### **6. What is an Artifact in CI/CD?**
+**Answer:** The compiled, packaged, immutable deployable unit produced by a build pipeline (Docker image, JAR, NPM package, Helm chart) that is promoted across environments.
 
-### **23. What is a deployment strategy?**  
+### **7. What is the "Build Once, Deploy Anywhere" principle?**
+**Answer:** The architectural rule that code is compiled and packaged into an immutable container/binary once during CI, and the exact same binary is deployed to Dev, Staging, and Production by injecting environment-specific configs at runtime.
 
-**Answer:**  
-Deployment strategies ensure smooth updates. Common types:  
+### **8. What is a Build Matrix in CI/CD?**
+**Answer:** A configuration that spawns multiple parallel pipeline jobs across combinations of operating systems (Ubuntu, macOS, Windows) and runtime versions (Node 18, 20, 22).
 
-- **Rolling Deployment:** Replaces old instances gradually.  
-- **Blue-Green Deployment:** Deploys new version alongside the old one.  
-- **Canary Deployment:** Releases updates to a small group first.  
+### **9. What is Pipeline Caching vs Artifact Storage?**
+**Answer:** Caching stores temporary dependencies (`node_modules`, Maven caches) to speed up subsequent builds; Artifact Storage persists output binaries and compliance test reports long-term.
 
-### **24. How do you secure CI/CD pipelines?**  
+### **10. What is Semantic Versioning (SemVer)?**
+**Answer:** Formatting release versions as `MAJOR.MINOR.PATCH` (e.g., `2.4.1`) where MAJOR indicates breaking changes, MINOR indicates backward-compatible features, and PATCH indicates bug fixes.
 
-**Answer:**  
+### **11. What are Conventional Commits?**
+**Answer:** A structured commit message specification (`feat:`, `fix:`, `chore:`, `feat!:`) that enables automated tools (Semantic Release) to calculate version bumps and generate changelogs.
 
-- **Use Secrets Management** (e.g., HashiCorp Vault, AWS Secrets Manager).  
-- **Restrict Access:** Use role-based access control (RBAC).  
-- **Scan for Vulnerabilities:** Use tools like **Snyk, SonarQube**.
+### **12. What is a Linter and why must it run early?**
+**Answer:** A static analysis tool checking code formatting, syntax errors, and style rules without running code. Running linters first provides sub-minute feedback and saves expensive build compute minutes.
 
-### **25. How do you integrate CI/CD with Infrastructure as Code (IaC)?**  
+### **13. What is Secret Masking in CI/CD?**
+**Answer:** Automatically detecting registered secret strings in pipeline logs and replacing them with `***` to prevent accidental credential leakage in build logs.
 
-**Answer:**  
-Integrating **CI/CD with Infrastructure as Code (IaC)** ensures that infrastructure changes are automated and version-controlled.  
+### **14. What is a Webhook in CI/CD?**
+**Answer:** An HTTP POST callback sent from a Git repository (GitHub/GitLab) to a CI server upon events (`push`, `pull_request_opened`) to trigger immediate pipeline execution.
 
-- **Best Practices:**  
-  - Store IaC scripts (**Terraform, Ansible, CloudFormation**) in **Git**.  
-  - Use **automated testing** (e.g., `terraform validate`, `ansible-lint`).  
-  - Apply changes using CI/CD pipelines (`terraform apply`).  
-- **Example GitHub Actions Pipeline for Terraform:**  
+### **15. What are Ephemeral / Preview Environments?**
+**Answer:** Short-lived, isolated environments spun up automatically when a Pull Request is opened and destroyed upon merge or closure, allowing live feature testing.
 
-  ```yaml
-  jobs:
-    terraform:
-      steps:
-        - run: terraform init
-        - run: terraform validate
-        - run: terraform apply -auto-approve
-  ```  
+### **16. What is a Blue-Green Deployment?**
+**Answer:** Running two identical production environments (Blue and Green) where live traffic is routed to Blue while Green is tested, switching traffic instantly via load balancer upon validation.
 
-### **26. What is a pipeline as code?**  
+### **17. What is a Canary Deployment?**
+**Answer:** Rolling out a release to a small fraction of real users (e.g., 5%), monitoring error rates and latency, and incrementally shifting traffic to 100% if healthy.
 
-**Answer:**  
-Pipeline as Code means defining **CI/CD workflows using configuration files**.  
+### **18. What is Dark Launching?**
+**Answer:** Deploying backend code to production completely hidden behind feature flags to validate performance and database queries under live load without exposing UI features.
 
-- Example tools: **Jenkinsfile, GitHub Actions YAML, GitLab CI/CD YAML**.  
-- **Example Jenkinsfile:**  
+### **19. What is a Feature Flag (Toggle)?**
+**Answer:** A conditional code branch that decouples code deployment from feature release, enabling features to be enabled/disabled instantly via an API or management UI.
 
-  ```groovy
-  pipeline {
-    agent any
-    stages {
-      stage('Build') { steps { sh 'mvn package' } }
-      stage('Test') { steps { sh 'mvn test' } }
-    }
-  }
-  ```  
+### **20. What is Trunk-Based Development?**
+**Answer:** A branching strategy where developers merge small, frequent commits into a single shared branch (`main`), enabling continuous integration and fast delivery.
 
-### **27. What is an ephemeral build environment in CI/CD?**  
+### **21. What is GitFlow?**
+**Answer:** A branching model with long-lived branches (`develop`, `feature`, `release`, `hotfix`, `master`) that often leads to merge conflicts and slow delivery cycles.
 
-**Answer:**  
-An **ephemeral build environment** is a temporary environment spun up **only during the build process** and discarded after execution.  
+### **22. What is Static Application Security Testing (SAST)?**
+**Answer:** Whitebox security testing that scans uncompiled source code for vulnerabilities (SQL injection, buffer overflows, insecure cryptography) before compilation.
 
-- Used in **GitHub Actions Runners, Jenkins Agents, Kubernetes Jobs**.  
-- **Benefits:**  
-  - Ensures **clean state** for each build.  
-  - Reduces **resource costs**.  
+### **23. What is Dynamic Application Security Testing (DAST)?**
+**Answer:** Blackbox security testing that attacks a running application from the outside to discover runtime vulnerabilities, authentication bypasses, and misconfigurations.
 
-### **28. What is the purpose of a staging environment in CI/CD?**  
+### **24. What is Software Composition Analysis (SCA)?**
+**Answer:** Scanning open-source third-party dependencies against national vulnerability databases (NVD) for known CVEs.
 
-**Answer:**  
-A **staging environment** replicates production to test before deployment.  
+### **25. What is Mutation Testing in CI?**
+**Answer:** Introducing small intentional bugs (mutations) into source code to verify if unit tests fail; if tests pass, test assertions are weak.
 
-- **Why it matters:**  
-  - Helps catch bugs **before they reach production**.  
-  - Enables **performance testing, security testing**.  
-- **CI/CD flow:**  
-  - Dev → QA → **Staging** → Production  
+### **26. What is Concurrency Control in CI/CD?**
+**Answer:** Canceling obsolete in-progress pipeline runs on pull request branches when a newer commit is pushed (`cancel-in-progress: true`), saving compute resources.
 
-### **29. How does a monorepo impact CI/CD pipelines?**  
+### **27. What is a Merge Queue in GitHub?**
+**Answer:** An automated system that tests pull requests in an integrated sequential train against the anticipated merge result of prior queued PRs to ensure `main` never breaks.
 
-**Answer:**  
-A **monorepo** is a single repository for multiple projects/services.  
+### **28. What is Self-Hosted Runner vs Cloud-Hosted Runner?**
+**Answer:** Cloud-hosted runners are fully managed VMs by GitHub/GitLab; Self-hosted runners run in private VPCs with custom hardware, GPUs, and private network access.
 
-- **Challenges:**  
-  - Running **CI/CD for only changed services** can be complex.  
-  - **Large build times** if not optimized.  
-- **Solution:**  
-  - Use **Bazel, NX, or GitHub Actions path filters** to build/test only **modified code**.  
+### **29. What is Actions Runner Controller (ARC)?**
+**Answer:** A Kubernetes operator that deploys and autoscales ephemeral GitHub Actions runner pods on Kubernetes based on webhook events.
 
-### **30. What are pipeline triggers, and how are they used?**  
+### **30. What is OIDC (OpenID Connect) in CI/CD?**
+**Answer:** Federated authentication allowing CI runners to request short-lived, temporary cloud credentials (AWS STS / GCP IAM) using JWT tokens without static API keys.
 
-**Answer:**  
-Triggers **automatically start CI/CD workflows** based on specific events.  
+### **31. What is an SBOM (Software Bill of Materials)?**
+**Answer:** A formal, machine-readable nested inventory of all software packages, libraries, and transitive dependencies bundled inside a software container or binary.
 
-- **Examples:**  
-  - **Git Push:** Run pipeline when new code is pushed.  
-  - **Pull Requests:** Trigger tests before merging.  
-  - **Schedule:** Run a job every night (`cron`).  
-- **Example GitLab CI/CD trigger:**  
+### **32. What is Sigstore Cosign?**
+**Answer:** An open-source tool for cryptographically signing and verifying container images in OCI registries using keyless OIDC tokens.
 
-  ```yaml
-  trigger:
-    event: push
-  ```  
+### **33. What is the SLSA Framework?**
+**Answer:** Supply-chain Levels for Software Artifacts—a security framework defining standards for build platform isolation, non-falsifiable provenance, and source integrity.
 
-### **31. What is artifact versioning in CI/CD?**  
+### **34. What is Hermetic Build?**
+**Answer:** A build executed in a sandboxed container with zero outbound internet access, ensuring all dependencies are pre-fetched and cryptographically hashed for 100% reproducibility.
 
-**Answer:**  
-Versioning assigns **unique identifiers** to builds for tracking.  
+### **35. What is Docker BuildKit layer caching?**
+**Answer:** Caching intermediate container build layers in remote OCI registries, allowing ephemeral CI runners to reuse cached layers across independent builds.
 
-- **Best Practices:**  
-  - Use **Semantic Versioning (1.2.3)** for clarity.  
-  - Tag artifacts using commit hashes (`v1.0.0-commitSHA`).  
-- **Example:**  
+### **36. What is SonarQube Quality Gate?**
+**Answer:** A policy enforcing code quality thresholds (e.g., coverage $\ge 80\%$, 0 critical vulnerabilities) that blocks PR merges if not satisfied.
 
-  ```sh
-  docker tag my-app:latest my-app:1.2.3
-  ```  
+### **37. What is Code Coverage?**
+**Answer:** The percentage of application source code executed when automated test suites run (measured via tools like JaCoCo, Istanbul, pytest-cov).
 
-### **32. How do you handle environment variables in CI/CD?**  
+### **38. What is Pipeline as Code?**
+**Answer:** Defining CI/CD workflows, build steps, and environment targets in declarative version-controlled files (`.github/workflows/*.yml`, `.gitlab-ci.yml`, `Jenkinsfile`).
 
-**Answer:**  
+### **39. What is a Monorepo CI Strategy?**
+**Answer:** Using path filtering and change-dependency graph tools (Turborepo, Nx, Bazel) so commits only rebuild and test the specific microservices modified.
 
-- Use **.env files** or **CI/CD secrets storage**.  
-- **Example GitHub Actions Environment Variable:**  
+### **40. What is a Pull-Through Cache?**
+**Answer:** A local container registry (Harbor, AWS ECR Pull Through Cache) that caches public images locally inside the VPC, eliminating external rate limits.
 
-  ```yaml
-  env:
-    NODE_ENV: production
-  ```  
+### **41. What is Automated Canary Analysis (ACA)?**
+**Answer:** Using automated statistical telemetry queries (Prometheus, Datadog) to compare canary error rates against baseline pods and trigger automatic rollbacks on anomalies.
 
-- **Best Practices:**  
-  - **Never hardcode secrets.**  
-  - Use tools like **Vault, AWS Secrets Manager**.  
+### **42. What is Flagger?**
+**Answer:** A CNCF progressive delivery Kubernetes operator that automates canary routing and metric analysis using Istio, Linkerd, or Nginx Ingress.
 
-### **33. What is a multi-branch pipeline in CI/CD?**  
+### **43. What is Argo Rollouts?**
+**Answer:** A Kubernetes controller providing advanced deployment capabilities (Canary, Blue-Green, experimentation) with automated metric verification.
 
-**Answer:**  
-A **multi-branch pipeline** runs different workflows for different Git branches.  
+### **44. What is GitOps?**
+**Answer:** An operational model where Git repositories serve as the single source of truth for declarative infrastructure and application deployments.
 
-- **Example (Jenkins):**  
-  - `main` → Deploy to production.  
-  - `develop` → Deploy to staging.  
-- **Jenkinsfile example:**  
+### **45. What is ArgoCD?**
+**Answer:** A declarative, GitOps continuous delivery tool for Kubernetes that continuously reconciles desired state in Git with live cluster state.
 
-  ```groovy
-  if (env.BRANCH_NAME == 'main') {
-      deployToProd()
-  } else {
-      deployToStaging()
-  }
-  ```  
+### **46. What is FluxCD?**
+**Answer:** A modular, headless Kubernetes GitOps toolkit that automatically synchronizes cluster state from Git repositories and Helm charts.
 
-### **34. How do you automate rollback in CI/CD?**  
+### **47. What is Tekton?**
+**Answer:** A cloud-native Kubernetes framework for building flexible, serverless CI/CD execution pipelines using Kubernetes Custom Resource Definitions (Tasks, Pipelines).
 
-**Answer:**  
-If a deployment fails, CI/CD should **automatically revert to a stable version**.  
+### **48. What is Spinnaker?**
+**Answer:** An open-source multi-cloud continuous delivery platform developed by Netflix for managing complex, multi-stage deployment pipelines across AWS, GCP, and Kubernetes.
 
-- **Strategies:**  
-  - **Git Revert:** Roll back code changes.  
-  - **Kubernetes Rollback:** `kubectl rollout undo deployment my-app`.  
-  - **Feature Flags:** Disable a new feature without redeployment.  
+### **49. What is Gitleaks?**
+**Answer:** A fast, open-source secret scanning tool used in pre-commit hooks and CI pipelines to detect committed API keys, tokens, and private keys.
 
-### **35. What is test-driven development (TDD), and how does it integrate with CI/CD?**  
-
-**Answer:**  
-TDD means **writing tests before writing code**.  
-
-- **CI/CD Best Practice:**  
-  - Run unit tests **before merging code**.  
-  - Block deployment if tests fail.  
-- **Example:**  
-
-  ```python
-  def test_addition():
-      assert add(2, 3) == 5
-  ```  
-
-### **36. How do you handle dependencies in a CI/CD pipeline?**  
-
-**Answer:**  
-Managing dependencies ensures **consistent builds**.  
-
-- **Solutions:**  
-  - Use **lock files** (`package-lock.json`, `Pipfile.lock`).  
-  - Cache dependencies (`npm ci`, `pip freeze`).  
-- **Example:**  
-
-  ```yaml
-  - uses: actions/cache@v3
-    with:
-      path: ~/.npm
-      key: node-${{ hashFiles('**/package-lock.json') }}
-  ```  
-
-### **37. What is containerized CI/CD?**  
-
-**Answer:**  
-Running CI/CD jobs inside **containers** ensures **consistency and isolation**.  
-
-- **Tools:** Docker, Kubernetes, GitHub Actions.  
-- **Example:**  
-
-  ```yaml
-  jobs:
-    build:
-      runs-on: ubuntu-latest
-      container: node:16
-  ```  
-
-### **38. How do you optimize CI/CD pipelines for speed?**  
-
-**Answer:**  
-
-- **Run Tests in Parallel**  
-- **Cache Dependencies**  
-- **Use Lightweight Docker Images**  
-- **Only Deploy Changed Services**  
-
-### **39. What is an approval stage in CI/CD pipelines?**  
-
-**Answer:**  
-An **approval stage** requires **manual approval** before deploying to production.  
-
-- **Example:**  
-  - GitLab CI/CD: `when: manual`.  
-  - Jenkins: Use `input` step.  
-
-### **40. How do you handle secrets in CI/CD pipelines?**  
-
-**Answer:**  
-Secrets should **never be stored in Git**.  
-
-- **Solutions:**  
-  - **Vault, AWS Secrets Manager**.  
-  - **GitHub Secrets (`secrets.MY_SECRET`)**.  
-  - **Environment variables**.  
-- **Example:**  
-
-  ```yaml
-  env:
-    DATABASE_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  ```  
+### **50. What is Trivy?**
+**Answer:** A comprehensive vulnerability scanner for container images, filesystems, Git repos, and Kubernetes configurations.
 
 ---
 
-## **Advanced Level (41-60 Questions)**  
+## 🟡 **Part 2: GitHub Actions, GitLab CI & Jenkins Deep Dive (Questions 51–100)**
 
-### **41. What are self-hosted runners in CI/CD?**  
+### **51. What is a GitHub Actions Workflow?**
+**Answer:** An automated process defined in YAML under `.github/workflows/` composed of one or more jobs triggered by events (`push`, `pull_request`, `schedule`).
 
-**Answer:**  
-Self-hosted runners are custom machines for executing CI/CD jobs instead of cloud-hosted ones.  
+### **52. What is a GitHub Actions Job vs Step?**
+**Answer:** A Job is a collection of sequential steps executed on the same runner environment. Steps are individual tasks (running shell scripts or actions). Multiple jobs run in parallel by default.
 
-- Example: GitHub Actions supports **Linux, Windows, macOS** runners.  
+### **53. What is a Reusable Workflow in GitHub Actions?**
+**Answer:** A workflow triggered by `workflow_call` that can be called from other repositories to enforce standardized organization-wide compliance and deployment pipelines.
 
-### **42. How does caching improve CI/CD performance?**  
+### **54. What is a Composite Action in GitHub Actions?**
+**Answer:** A custom action (`action.yml`) that packages multiple shell commands and action steps into a single reusable step within a job.
 
-**Answer:**  
-Caching stores **dependencies** and **artifacts** to speed up builds.  
+### **55. How do you share files between jobs in GitHub Actions?**
+**Answer:** Since jobs run on independent virtual machines, files must be uploaded as artifacts using `actions/upload-artifact` in Job A and downloaded using `actions/download-artifact` in Job B.
 
-- Example: Caching npm dependencies in GitHub Actions:  
+### **56. How do you configure OIDC with AWS in GitHub Actions?**
+**Answer:** Set `permissions: { id-token: write, contents: read }`, then use `aws-actions/configure-aws-credentials@v4` with `role-to-assume` to exchange the GitHub JWT for temporary AWS IAM credentials.
 
-  ```yaml
-  steps:
-    - uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-  ```  
+### **57. What is `needs` in GitHub Actions?**
+**Answer:** An attribute that defines sequential job dependencies (e.g., `needs: [build, test]` ensures the deploy job runs only after both build and test succeed).
 
-### **43. What is parallel execution in CI/CD?**  
+### **58. What is `fail-fast` in GitHub Actions Matrix builds?**
+**Answer:** A boolean setting under `strategy:`. If `true` (default), GitHub cancels all running matrix jobs if any single job fails. Setting `fail-fast: false` allows all matrix variations to run to completion.
 
-**Answer:**  
-Parallel execution runs multiple tasks **simultaneously** to speed up pipelines.  
+### **59. What are GitHub Actions Environments and Protection Rules?**
+**Answer:** Deployment targets (e.g., `production`) configured with required reviewers, wait timers, and branch protection rules that must be approved before deployment jobs execute.
 
-- Example: Running multiple tests at once in Jenkins.  
+### **60. How do you securely pass secrets to Reusable Workflows?**
+**Answer:** Use `secrets: inherit` in the calling workflow to pass all caller secrets, or explicitly pass specific secrets via `secrets: { DB_PASSWORD: ${{ secrets.DB_PASS }} }`.
 
-### **44. What is dynamic vs. static analysis in CI/CD security?**  
+### **61. What is the `.gitlab-ci.yml` architecture?**
+**Answer:** A declarative configuration file defining stages, jobs, scripts, and artifact handling natively integrated into GitLab repositories and container registries.
 
-**Answer:**  
+### **62. What are GitLab CI Stages?**
+**Answer:** Sequential execution blocks (e.g., `stages: [build, test, deploy]`). All jobs within the same stage run concurrently; the next stage starts only after all jobs in the current stage succeed.
 
-- **Static Analysis:** Scans code **before execution** (e.g., SonarQube).  
-- **Dynamic Analysis:** Scans code **during runtime** (e.g., OWASP ZAP).  
+### **63. What is GitLab CI `rules` keyword?**
+**Answer:** A powerful conditional syntax determining whether a job is included in the pipeline based on branch names, commit messages, file changes, or pipeline variables.
 
-### **45. What is a feature flag, and how does it work in CI/CD?**  
+### **64. What is a GitLab Runner?**
+**Answer:** An open-source application that executes pipeline jobs defined in `.gitlab-ci.yml`, supporting Docker, Kubernetes, SSH, and Shell executors.
 
-**Answer:**  
-A feature flag enables/disables features without deploying new code.  
+### **65. What is GitLab Auto DevOps?**
+**Answer:** A pre-configured CI/CD pipeline template that automatically detects programming languages, builds container images, executes security tests, and deploys to Kubernetes without manual pipeline coding.
 
-- Example: Toggle dark mode using a flag instead of redeploying.  
+### **66. What is a Declarative Jenkinsfile?**
+**Answer:** A structured, syntax-checked pipeline format (`pipeline { agent any; stages { ... } }`) with built-in directives for environments, parameters, and post-build actions.
 
-### **46. How do you handle secrets in CI/CD pipelines?**  
+### **67. What is a Scripted Jenkinsfile?**
+**Answer:** A Groovy-based procedural pipeline format (`node { ... }`) offering unlimited programmatic flexibility at the cost of higher maintenance complexity.
 
-**Answer:**  
+### **68. What is Jenkins Configuration as Code (JCasC)?**
+**Answer:** Defining the entire Jenkins controller configuration (plugins, security realms, credentials, node settings) in declarative YAML files stored in Git.
 
-- Use **environment variables** securely.  
-- Store secrets in **AWS Secrets Manager, HashiCorp Vault**.  
-- Example:  
+### **69. What is the Jenkins Kubernetes Plugin?**
+**Answer:** A plugin that allows the Jenkins controller to dynamically spawn ephemeral agent pods in a Kubernetes cluster to execute build jobs, terminating pods immediately on job completion.
 
-  ```yaml
-  secrets:
-    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  ```  
+### **70. What is Jenkins Shared Libraries?**
+**Answer:** A centralized Git repository of reusable Groovy code and pipeline steps that can be imported and executed across multiple independent Jenkinsfiles.
 
-### **47. What is observability in CI/CD?**  
+### **71. How do you prevent credentials leakage in Jenkins logs?**
+**Answer:** Use `withCredentials([string(credentialsId: '...', variable: 'API_TOKEN')]) { ... }` which automatically masks the secret value in console logs.
 
-**Answer:**  
-Observability means **monitoring logs, metrics, and traces** to debug CI/CD failures.  
+### **72. What is Jenkins Multibranch Pipeline?**
+**Answer:** A Jenkins job type that automatically scans a Git repository, creates pipeline jobs for every detected branch with a `Jenkinsfile`, and deletes jobs for merged branches.
 
-### **48. What is immutable infrastructure?**  
+### **73. What is Blue Ocean in Jenkins?**
+**Answer:** A modern, visual user interface for Jenkins designed to visualize complex multi-stage pipeline executions and failure points.
 
-**Answer:**  
-Immutable infrastructure means **servers are never updated** but replaced instead.  
+### **74. What is GitLab CI `cache` vs `artifacts`?**
+**Answer:** `cache` is used to speed up subsequent runs by caching project dependencies across pipelines; `artifacts` are files passed between sequential stages within the same pipeline.
 
-### **49. What are the key metrics for CI/CD performance?**  
+### **75. What is GitHub Actions `hashFiles()` function?**
+**Answer:** Computes an MD5/SHA256 hash of matching files (e.g., `hashFiles('**/package-lock.json')`) used as a dynamic cache key to invalidate dependencies when lockfiles change.
 
-**Answer:**  
+### **76. What is GitHub Actions `workflow_dispatch`?**
+**Answer:** An event trigger allowing users to trigger workflows manually from the GitHub UI or API with customizable input parameters.
 
-- **Lead Time:** Time from commit to deployment.  
-- **Mean Time to Recovery (MTTR):** Time to recover from failures.  
+### **77. What is GitHub Actions `repository_dispatch`?**
+**Answer:** An HTTP webhook trigger allowing external systems (e.g., third-party webhooks, custom microservices) to trigger a GitHub Actions workflow with a JSON payload.
 
-### **50. How do you ensure zero-downtime deployments?**  
+### **78. How do you debug GitHub Actions workflows in real time?**
+**Answer:** Enable runner diagnostic logging by setting repository secrets `ACTIONS_RUNNER_DEBUG=true` and `ACTIONS_STEP_DEBUG=true`, or use tools like `tmate` for interactive SSH debugging.
 
-**Answer:**  
+### **79. What is a Jenkins Blue-Green deployment plugin?**
+**Answer:** Plugins or custom pipeline scripts that orchestrate swapping load balancer target groups or updating DNS records between Blue and Green environments.
 
-- **Use rolling updates, blue-green, and canary deployments.**  
-- **Deploy with Kubernetes and load balancers.**  
+### **80. What is GitLab CI DAG (Directed Acyclic Graph) Pipeline?**
+**Answer:** Using the `needs` keyword in GitLab CI to allow jobs to start immediately once their specific prerequisites complete, regardless of stage ordering.
 
-### **51. What is a release train in CI/CD?**  
+### **81. What is GitHub Actions Concurrency Group?**
+**Answer:** A named grouping (`concurrency: ${{ github.workflow }}-${{ github.ref }}`) that limits concurrent execution of workflows, queuing or canceling redundant runs.
 
-**Answer:**  
-A **release train** is a deployment strategy where software releases are scheduled at **fixed intervals**, rather than waiting for all features to be ready.  
+### **82. How do you implement automated semantic releases in GitLab CI?**
+**Answer:** Run the `semantic-release` NPM package in the release stage, which analyzes commit messages, creates Git tags, generates release notes, and publishes packages.
 
-- Common in **Agile** environments.  
-- Ensures **predictability** and **reduces deployment risks**.  
-- Example: **Google Chrome** releases every 4 weeks regardless of pending features.  
+### **83. What is the Jenkins Pipeline `post` section?**
+**Answer:** Directives (`always`, `success`, `failure`, `unstable`, `cleanup`) executed at the completion of a pipeline or stage to send Slack alerts or clean workspace disks.
 
-### **52. How do you handle database migrations in a CI/CD pipeline?**  
+### **84. What is a Jenkins Agent vs Controller?**
+**Answer:** The Controller manages the web UI, parses pipeline scripts, and schedules builds; Agents are worker instances that execute the actual build steps.
 
-**Answer:**  
-Database migrations ensure **schema changes** are applied safely in an automated pipeline.  
+### **85. How do you secure Jenkins Controller from malicious agents?**
+**Answer:** Enable Agent-to-Controller Access Control, disable CLI access over remoting, and run build agents in isolated ephemeral containers with minimal host permissions.
 
-- Use tools like **Liquibase, Flyway, Django Migrations**.  
-- Steps in CI/CD:  
-  1. **Check migrations** before deployment (`liquibase validate`).  
-  2. **Apply migrations** during deployment (`flyway migrate`).  
-  3. **Rollback if failure** (`flyway undo`).  
-- Example in a pipeline (Flyway):  
+### **86. What is GitHub Actions `step-security/harden-runner`?**
+**Answer:** A security action that monitors outbound network traffic from GitHub runners, blocks DNS exfiltration, and detects file tampering during CI execution.
 
-  ```yaml
-  steps:
-    - name: Apply database migrations
-      run: flyway migrate -url=jdbc:mysql://db -user=root -password=secret
-  ```  
+### **87. What is GitHub Actions Composite Action `using: "composite"`?**
+**Answer:** The declaration in `action.yml` indicating the action is built using composite steps rather than a Docker container or JavaScript runtime.
 
-### **53. What is trunk-based development, and how does it impact CI/CD?**  
+### **88. What is GitLab CI Include keyword?**
+**Answer:** Directives (`include:local`, `include:file`, `include:remote`, `include:template`) allowing pipelines to modularize and import external YAML files.
 
-**Answer:**  
-Trunk-based development means developers **commit directly to the main branch** (trunk) instead of using long-lived feature branches.  
+### **89. What is GitHub Actions `runner.temp` vs `runner.workspace`?**
+**Answer:** `runner.temp` is an isolated temporary directory wiped after job completion; `runner.workspace` is the directory where the repository is cloned.
 
-- **Pros:**  
-  - **Faster CI/CD cycles** with fewer merge conflicts.  
-  - Reduces integration complexity.  
-- **Cons:**  
-  - Requires **strict automated testing** to prevent breaking changes.  
-- Example workflow:  
-  - Commit to `main` → Automated Tests → Deploy to Staging → Deploy to Production.  
+### **90. How do you manage Docker-in-Docker (dind) securely in GitLab CI?**
+**Answer:** Use rootless Docker or TLS-enabled Docker daemons (`DOCKER_TLS_CERTDIR="/certs"`), or switch to daemonless build tools like **Kaniko**.
 
-### **54. How do you implement blue-green deployments in Kubernetes?**  
+### **91. What is Kaniko and why is it preferred for building containers in Kubernetes?**
+**Answer:** A Google open-source tool that builds container images from a Dockerfile inside a Kubernetes pod **without requiring a Docker daemon or privileged host root access**.
 
-**Answer:**  
-A **blue-green deployment** runs **two versions** of an application simultaneously, allowing **instant rollback** if issues occur.  
+### **92. What is Buildah?**
+**Answer:** A command-line tool for building OCI container images without requiring a background container daemon or root privileges.
 
-- Steps:  
-  1. Deploy **new version (green)** while **old version (blue) stays live**.  
-  2. Switch traffic to green using a **load balancer or Ingress**.  
-  3. Rollback if issues arise by redirecting traffic back to blue.  
-- Example Kubernetes YAML:  
+### **93. What is GitHub Actions Token (`GITHUB_TOKEN`)?**
+**Answer:** An automatically generated, short-lived secret token provided to each workflow run with scoped permissions defined via the `permissions:` block.
 
-  ```yaml
-  apiVersion: networking.k8s.io/v1
-  kind: Ingress
-  metadata:
-    name: blue-green
-  spec:
-    rules:
-      - http:
-          paths:
-            - path: "/"
-              backend:
-                service:
-                  name: green-service
-                  port:
-                    number: 80
-  ```  
+### **94. What is GitHub Actions Least-Privilege Permissions?**
+**Answer:** Explicitly defining `permissions: { contents: read, id-token: write }` at the top of workflows to override overly permissive default repository settings.
 
-### **55. What is a service mesh, and how does it help CI/CD?**  
+### **95. How do you run scheduled cron jobs in GitHub Actions?**
+**Answer:** Using the `schedule` trigger: `on: schedule: - cron: '0 2 * * *'` (runs daily at 2:00 AM UTC).
 
-**Answer:**  
-A **service mesh** is a dedicated infrastructure layer for handling **service-to-service communication** in microservices.  
+### **96. What is GitLab CI Environment Variables Hierarchy?**
+**Answer:** Variables are resolved with precedence: Project Variables $>$ Group Variables $>$ Instance Variables $>$ Pipeline Variables $>$ YAML Variables.
 
-- Examples: **Istio, Linkerd, Consul**.  
-- Benefits in CI/CD:  
-  - **Canary deployments**: Route traffic gradually.  
-  - **A/B Testing**: Split traffic between versions.  
-  - **Security**: Implements zero-trust policies (e.g., **mTLS**).  
+### **97. What is Jenkins Pipeline Syntax Generator?**
+**Answer:** A built-in web tool (`/pipeline-syntax`) that generates accurate Groovy code snippets for specific plugins and steps.
 
-### **56. What is progressive delivery in CI/CD?**  
+### **98. What is SonarQube Scanner in CI?**
+**Answer:** A CLI tool that executes static code analysis, uploads AST reports to the SonarQube server, and awaits Quality Gate webhook evaluation.
 
-**Answer:**  
-Progressive delivery is an **evolution of CI/CD** that deploys features gradually, rather than all at once.  
+### **99. What is GitLab Review Apps?**
+**Answer:** Ephemeral dynamic environments spun up automatically per branch in GitLab CI, integrated directly with merge request review pages.
 
-- **Includes:**  
-  - **Feature Flags:** Enable/disable features dynamically.  
-  - **Canary Releases:** Test with a small user group first.  
-  - **A/B Testing:** Deploy different versions for analytics.  
-
-### **57. How do you handle long-running tests in CI/CD pipelines?**  
-
-**Answer:**  
-Long-running tests slow down deployments. Strategies to optimize:  
-
-- **Parallel Test Execution:** Run tests across multiple machines.  
-- **Test Selection:** Run only impacted tests using **test impact analysis**.  
-- **Mocking Dependencies:** Reduce external calls using **Mockito, WireMock**.  
-- **Shift-Left Testing:** Run tests **early in the pipeline** to detect failures faster.  
-
-### **58. What is Chaos Engineering, and how does it fit into CI/CD?**  
-
-**Answer:**  
-Chaos Engineering involves **intentionally injecting failures** to test system resilience.  
-
-- **Example tools:**  
-  - **Gremlin, LitmusChaos** (Kubernetes-based).  
-  - **AWS Fault Injection Simulator (FIS)**.  
-- **In CI/CD Pipelines:**  
-  - Add a **chaos test stage** before production deployment.  
-  - Example:  
-
-    ```yaml
-    steps:
-      - name: Run Chaos Test
-        run: gremlin attack --target kubernetes --cpu 90%
-    ```  
-
-### **59. How do you implement immutable deployments in CI/CD?**  
-
-**Answer:**  
-Immutable deployments mean **never modifying running instances**—instead, deploying a new version entirely.  
-
-- Best for **containers, serverless, and cloud-native applications**.  
-- Tools:  
-  - **Docker images** (`image: my-app:v2`).  
-  - **Infrastructure as Code (Terraform, CloudFormation)** to replace instances.  
-- **Example:**  
-  - **Bad approach:** `ssh into a server & update the app`.  
-  - **Good approach:** `Deploy a new container & replace old one`.  
-
-### **60. What are the best practices for securing CI/CD pipelines?**  
-
-**Answer:**  
-To secure CI/CD, follow **these best practices**:  
-✅ **Use Secret Management:** Store secrets in **Vault, AWS Secrets Manager, or Kubernetes Secrets**.  
-✅ **Enable Role-Based Access Control (RBAC):** Restrict who can trigger deployments.  
-✅ **Enforce Code Signing:** Sign artifacts to ensure they are not tampered with.  
-✅ **Run Security Scans:** Use **SAST, DAST, and dependency scanning** tools.  
-✅ **Monitor CI/CD Pipelines:** Detect suspicious activity using **SIEM tools** like Splunk or Datadog.  
+### **100. What is GitHub Actions `continue-on-error`?**
+**Answer:** A step-level attribute that prevents a job from failing if a non-critical step (e.g., an experimental linter) returns a non-zero exit code.
 
 ---
 
-## **📢 Contribute & Stay Updated**  
+## 🔴 **Part 3: GitOps, Progressive Delivery & Supply Chain Security (Questions 101–200)**
 
-💡 **Want to contribute?**  
-We **welcome contributions!** If you have insights, new tools, or improvements, feel free to submit a **pull request**.  
+### **101. What is GitOps?**
+**Answer:** An operational model where Git repositories serve as the single source of truth for declarative infrastructure and application deployments, using automated pull-based reconciliation operators.
 
-📌 **How to Contribute?**
+### **102. What are the Four Principles of GitOps (OpenGitOps)?**
+**Answer:** 1. Declarative Desired State, 2. Versioned and Immutable Storage in Git, 3. Pulled Automatically by In-Cluster Agents, 4. Continuously Reconciled with Automated Drift Correction.
 
-- Read the **[CONTRIBUTING.md](https://github.com/NotHarshhaa/DevOps-Interview-Questions/blob/master/CONTRIBUTING.md)** guide.  
-- Fix errors, add missing topics, or suggest improvements.  
-- Submit a **pull request** with your updates.  
+### **103. What is ArgoCD?**
+**Answer:** A declarative GitOps continuous delivery operator for Kubernetes that continuously monitors Git repositories and synchronizes live cluster state with desired state.
 
-📢 **Stay Updated:**  
-⭐ **Star the repository** to get notified about new updates and additions.  
-💬 **Join discussions** in **[GitHub Issues](https://github.com/NotHarshhaa/DevOps-Interview-Questions/issues)** to suggest improvements.  
+### **104. What is the ArgoCD Application CRD?**
+**Answer:** A Kubernetes Custom Resource defining the source repository, path, target cluster, target namespace, and sync policies for an application.
 
----
+### **105. What is an ArgoCD ApplicationSet?**
+**Answer:** A controller that automates the generation and multi-cluster deployment of multiple ArgoCD `Application` resources using List, Cluster, Git Directory, or Matrix generators.
 
-## **🌍 Community & Support**  
+### **106. What are ArgoCD Sync Waves?**
+**Answer:** Annotations (`argocd.argoproj.io/sync-wave: "1"`) that control the exact numerical execution order of Kubernetes resources during synchronization (lower/negative numbers apply first).
 
-🔗 **GitHub:** [@NotHarshhaa](https://github.com/NotHarshhaa)  
-📝 **Blog:** [ProDevOpsGuy](https://blog.prodevopsguy.xyz)  
-💬 **Telegram Community:** [Join Here](https://t.me/prodevopsguy)  
+### **107. What are ArgoCD Sync Phases?**
+**Answer:** PreSync $\rightarrow$ Sync $\rightarrow$ PostSync $\rightarrow$ SyncFail. Allows running prerequisite jobs (database migrations) before updating application deployments.
 
-![Follow Me](https://imgur.com/2j7GSPs.png)
+### **108. What is ArgoCD Auto-Sync and Self-Healing?**
+**Answer:** Auto-Sync automatically applies new Git commits to the cluster; Self-Healing detects manual out-of-band cluster edits and overwrites them back to the Git source of truth.
+
+### **109. What is ArgoCD Prune?**
+**Answer:** An automated synchronization setting that deletes Kubernetes resources from the cluster when their corresponding manifest files are removed from Git.
+
+### **110. What is FluxCD?**
+**Answer:** A set of continuous and progressive delivery controllers for Kubernetes (Source Controller, Kustomize Controller, Helm Controller) implementing GitOps.
+
+### **111. What is FluxCD Kustomization CRD?**
+**Answer:** A resource defining a pipeline for applying Kustomize overlays from a Git repository to a target Kubernetes cluster with health checking and automated rollback.
+
+### **112. What is FluxCD HelmRelease?**
+**Answer:** A declarative resource that manages the lifecycle of Helm chart releases, automatically pulling charts from OCI or HTTP repositories and reconciling values.
+
+### **113. What is Progressive Delivery?**
+**Answer:** Advanced continuous delivery combining canary deployments, traffic routing, feature flags, and automated metric analysis to minimize blast radius during releases.
+
+### **114. What is Argo Rollouts?**
+**Answer:** A Kubernetes operator replacing standard Deployments with a `Rollout` CRD that coordinates canary traffic splitting and automated metric analysis.
+
+### **115. What is an AnalysisTemplate in Argo Rollouts?**
+**Answer:** A declarative template defining Prometheus, Datadog, or CloudWatch queries used to evaluate canary health during progressive rollouts.
+
+### **116. What is Flagger?**
+**Answer:** A progressive delivery operator that automates canary releases, A/B testing, and blue-green deployments on Kubernetes using Service Meshes (Istio, Linkerd) and Ingress controllers.
+
+### **117. What is Software Supply Chain Security?**
+**Answer:** Protecting against unauthorized modifications, malicious dependency injections, and compromised build systems across the entire software development lifecycle.
+
+### **118. What is the SLSA Framework (Levels 1–3)?**
+**Answer:** Level 1: Scripted build generating provenance; Level 2: Hosted build service with source integrity; Level 3: Isolated, ephemeral, hermetic build platform with cryptographically signed, non-falsifiable provenance.
+
+### **119. What is Keyless Signing with Sigstore Cosign?**
+**Answer:** Signing container images using short-lived OIDC tokens exchanged for X.509 certificates from Fulcio, recording signatures in the Rekor transparency log.
+
+### **120. What is Rekor in Sigstore?**
+**Answer:** An immutable, tamper-evident, append-only transparency log that records signed artifact metadata and proof of provenance.
+
+### **121. What is Fulcio in Sigstore?**
+**Answer:** A free, public Certificate Authority that issues short-lived (10-minute) X.509 certificates bound to OpenID Connect identities (e.g., GitHub Actions workflows).
+
+### **122. What is Syft?**
+**Answer:** An open-source CLI tool and library for generating Software Bill of Materials (SBOMs) from container images, filesystems, and archives in CycloneDX and SPDX formats.
+
+### **123. What is Grype?**
+**Answer:** An open-source vulnerability scanner specifically designed to scan container images and SBOM files for known security vulnerabilities.
+
+### **124. What is In-Toto?**
+**Answer:** A framework for cryptographic verification of software supply chain integrity, ensuring every step from commit to build to packaging was performed by authorized actors.
+
+### **125. What is Kyverno Image Verification?**
+**Answer:** An admission policy rule that verifies container image cryptographic signatures against Sigstore Cosign before allowing pods to schedule in Kubernetes.
+
+### **126. What is Bitnami Sealed Secrets?**
+**Answer:** A GitOps secret management tool where secrets are encrypted client-side with a public key and committed to Git, decrypted inside the cluster by a controller possessing the private key.
+
+### **127. What is External Secrets Operator (ESO)?**
+**Answer:** A Kubernetes operator that synchronizes secrets from enterprise vaults (AWS Secrets Manager, HashiCorp Vault, Azure Key Vault) into native Kubernetes `Secret` resources.
+
+### **128. What is HashiCorp Vault Agent Sidecar Injector?**
+**Answer:** A Kubernetes mutating webhook that injects a Vault agent container into application pods to dynamically fetch and render secrets into an in-memory volume.
+
+### **129. What is Atlantis for Terraform?**
+**Answer:** An open-source application that executes `terraform plan` and `terraform apply` directly inside GitHub/GitLab Pull Request comments with automated state locking.
+
+### **130. What is Spacelift?**
+**Answer:** A specialized CI/CD management platform for Infrastructure as Code (Terraform, OpenTofu, Pulumi, CloudFormation, Kubernetes) with policy enforcement via OPA.
+
+### **131. What is GitHub Actions Runner Controller (ARC) Autoscaling?**
+**Answer:** Autoscaling runner pods dynamically based on GitHub API metrics (`workflow_job` queue depth) from 0 to hundreds of instances.
+
+### **132. What is Ephemeral Runner Security?**
+**Answer:** Destroying self-hosted runner pods/VMs immediately after completing a single job to prevent lateral movement, credential theft, and state pollution.
+
+### **133. What is Snyk?**
+**Answer:** A commercial developer security platform scanning source code (SAST), dependencies (SCA), container images, and IaC templates for security vulnerabilities.
+
+### **134. What is SonarQube?**
+**Answer:** A continuous code quality platform evaluating code coverage, duplication, complexity, code smells, and security vulnerabilities.
+
+### **135. What is OWASP ZAP in CI/CD?**
+**Answer:** An open-source web application security scanner used in CI pipelines to execute automated Dynamic Application Security Testing (DAST).
+
+### **136. What is Checkov?**
+**Answer:** A static analysis tool for IaC that scans Terraform, Kubernetes manifests, Helm charts, and Dockerfiles for security misconfigurations.
+
+### **137. What is tfsec?**
+**Answer:** A fast static analysis security scanner for Terraform code, now integrated into Trivy.
+
+### **138. What is Infracost?**
+**Answer:** A FinOps tool that parses Terraform code in pull requests to calculate monthly cloud cost impact before merging code.
+
+### **139. What is Kustomize in GitOps?**
+**Answer:** A template-free configuration manager that customizes Kubernetes YAML manifests using declarative overlays (dev, staging, prod) over a base configuration.
+
+### **140. What is Helm in GitOps?**
+**Answer:** A package manager for Kubernetes that bundles related manifests into reusable Charts, parameterized using `values.yaml` files.
+
+### **141. What is Helmfile?**
+**Answer:** A declarative spec for deploying multiple Helm charts across multiple Kubernetes clusters in dependency order.
+
+### **142. What is Tekton Pipelines?**
+**Answer:** A Kubernetes-native CRD defining a Directed Acyclic Graph (DAG) of Tasks executed sequentially or in parallel inside ephemeral pods.
+
+### **143. What is Spinnaker Automated Canary Analysis (Kayenta)?**
+**Answer:** An automated statistical analysis engine comparing canary metrics against baseline metrics over time to make automated promotion decisions.
+
+### **144. What is Chaos Mesh in CI/CD?**
+**Answer:** Injecting automated network delays, pod failures, and disk stress into staging environments during CI pipeline execution to validate resilience.
+
+### **145. What is Semantic Release?**
+**Answer:** An automated tool that analyzes commit messages to determine the next SemVer version, generates changelogs, creates Git tags, and publishes releases.
+
+### **146. What is Release Please?**
+**Answer:** A Google tool that generates Release PRs containing updated changelogs and version bumps based on conventional commit history.
+
+### **147. What is Dependabot / Renovate?**
+**Answer:** Automated dependency update bots that scan repository manifests, check for new package releases, and automatically open PRs with changelog summaries.
+
+### **148. What is Renovate Bot?**
+**Answer:** A highly configurable, multi-platform dependency update tool supporting automated merging of non-breaking security patches.
+
+### **149. What is a Pull Request Builder Job?**
+**Answer:** An automated CI job that triggers when a PR is created or updated to compile code, run tests, and report status checks back to the PR.
+
+### **150. What is a GitOps Out-of-Sync State?**
+**Answer:** A condition where the live state of Kubernetes cluster resources differs from the declared configuration stored in Git.
+
+### **151. What is GitOps Drift Correction?**
+**Answer:** The automatic overwrite of unauthorized out-of-band manual changes in a cluster back to the version declared in Git.
+
+### **152. What is an ArgoCD PreSync Hook?**
+**Answer:** A Kubernetes resource (Job) executed before any other deployment resources are applied, commonly used for database schema migrations.
+
+### **153. What is an ArgoCD PostSync Hook?**
+**Answer:** A script or notification Job executed only after all deployment resources have successfully become healthy in the cluster.
+
+### **154. What is an ArgoCD SyncFail Hook?**
+**Answer:** A remediation Job executed when an ArgoCD synchronization operation fails.
+
+### **155. What is Secret Masking Bypass Risk?**
+**Answer:** If secrets are base64-encoded or split across multiple strings, CI engines will fail to match the secret string and print it in plain text.
+
+### **156. What is Git Credential Helper in CI?**
+**Answer:** A utility allowing CI/CD runners to authenticate with remote Git repositories using short-lived OAuth tokens instead of hardcoded passwords.
+
+### **157. What is GitHub Actions Reusable Workflow Inheritance?**
+**Answer:** Passing all secrets and context from a caller workflow to a reusable workflow using `secrets: inherit`.
+
+### **158. What is Container Layer Squashing?**
+**Answer:** Merging all intermediate build layers of a container into a single layer to reduce image size and discard temporary files.
+
+### **159. What is Multi-Arch Container Building?**
+**Answer:** Using Docker `buildx` to compile container images for multiple CPU architectures (`linux/amd64`, `linux/arm64`) from a single Dockerfile.
+
+### **160. What is OCI (Open Container Initiative)?**
+**Answer:** An open governance industry standard defining specifications for container image formats (Image Spec) and runtimes (Runtime Spec).
+
+### **161. What is Cosign Attestation?**
+**Answer:** Cryptographically signing metadata predicates (SBOMs, test results, vulnerability scan reports) and attaching them to the container image in the registry.
+
+### **162. What is Kyverno ClusterPolicy vs Policy?**
+**Answer:** `ClusterPolicy` applies to all resources across the entire cluster; `Policy` is scoped strictly to a single namespace.
+
+### **163. What is OPA Gatekeeper ConstraintTemplate?**
+**Answer:** A Custom Resource defining the declarative Rego logic for a policy, instantiated by `Constraint` CRDs.
+
+### **164. What is a Continuous Integration Feedback Loop?**
+**Answer:** The time elapsed from a developer pushing a commit to receiving automated test results; must be $< 10$ minutes to maintain high velocity.
+
+### **165. What is Monorepo Incremental Building?**
+**Answer:** Using cached compilation outputs so that changing one file only recompiles that file and its direct dependents.
+
+### **166. What is Bazel?**
+**Answer:** A fast, scalable, multi-language build system developed by Google that enforces hermetic, reproducible builds and aggressive caching.
+
+### **167. What is Turborepo?**
+**Answer:** A high-performance build system for JavaScript/TypeScript monorepos that caches build and test execution outputs remotely.
+
+### **168. What is Nx?**
+**Answer:** A smart, extensible build framework with advanced dependency graph visualization and distributed task execution for monorepos.
+
+### **169. What is a Git Pre-Commit Hook?**
+**Answer:** A client-side script executed automatically before `git commit` runs, used to lint code, format files, and check for committed secrets locally.
+
+### **170. What is `pre-commit` framework?**
+**Answer:** A multi-language package manager for managing and maintaining pre-commit hooks via a declarative `.pre-commit-config.yaml` file.
+
+### **171. What is Trunk-Based Feature Flag Lifecycle?**
+**Answer:** 1. Create flag $\rightarrow$ 2. Implement logic behind flag $\rightarrow$ 3. Merge to `main` $\rightarrow$ 4. Enable flag in production $\rightarrow$ 5. Clean up flag conditional code.
+
+### **172. What is Dark Launching vs Shadowing?**
+**Answer:** Dark launching deploys backend code with no UI changes; Shadowing duplicates live incoming HTTP traffic and replays it against the new version.
+
+### **173. What is an Artifact Provenance Document?**
+**Answer:** Cryptographically signed metadata recording exactly who built the artifact, from which commit SHA, on which CI runner, and using which build parameters.
+
+### **174. What is CycloneDX?**
+**Answer:** An OWASP-backed, lightweight Software Bill of Materials (SBOM) standard designed for application security and vulnerability analysis.
+
+### **175. What is SPDX?**
+**Answer:** An open standard (ISO/IEC 5962:2021) for communicating Software Bill of Materials data, including components, licenses, and copyrights.
+
+### **176. What is a Vulnerability Exploitability eXchange (VEX)?**
+**Answer:** A machine-readable companion to an SBOM that declares whether a specific CVE in a dependency is actually exploitable in the context of the application.
+
+### **177. What is Supply Chain Security SLSA Provenance?**
+**Answer:** An in-toto attestation generated during the build step certifying the source repository, commit, and build environment.
+
+### **178. What is Docker Content Trust (DCT)?**
+**Answer:** A legacy Docker feature using Notary and digital signatures to verify the integrity and publisher of specific image tags.
+
+### **179. What is a Pipeline Deadlock?**
+**Answer:** A state where two or more pipeline jobs wait indefinitely on mutually dependent resources or locks (e.g., job A holds lock 1 waiting for job B, while job B holds lock 2 waiting for job A).
+
+### **180. What is CI/CD Pipeline Blast Radius?**
+**Answer:** The maximum potential damage caused if a CI/CD system is compromised (mitigated by using pull-based GitOps and ephemeral runners).
+
+### **181. What is Automated Rollback in Argo Rollouts?**
+**Answer:** Automatically aborting a canary deployment and reverting traffic to stable pods when an AnalysisTemplate metric breach occurs.
+
+### **182. What is a Canary Step Weight?**
+**Answer:** The percentage of total traffic allocated to the canary version during a specific phase of a progressive rollout (e.g., `setWeight: 20`).
+
+### **183. What is a Flagger Metric Template?**
+**Answer:** A Custom Resource defining Prometheus PromQL queries (e.g., error rate $< 1\%$, latency $< 500\text{ms}$) checked during canary analysis.
+
+### **184. What is Blue-Green Cutover Latency?**
+**Answer:** The time taken for load balancers or DNS to update routing rules from Blue to Green; with Kubernetes Services, this occurs in sub-seconds.
+
+### **185. What is a Pipeline Concurrency Lock?**
+**Answer:** Restricting deployment pipelines to execute one at a time per target environment to prevent concurrent overlapping state modifications.
+
+### **186. What is a GitOps Sync Window?**
+**Answer:** Scheduled maintenance windows in ArgoCD that allow or deny automated synchronizations during specific hours (e.g., blocking prod syncs on weekends).
+
+### **187. What is ArgoCD SSO (Single Sign-On)?**
+**Answer:** Integrating ArgoCD with enterprise identity providers (Okta, Azure AD, GitHub) via OIDC or SAML to enforce role-based access control.
+
+### **188. What is FluxCD Source Controller?**
+**Answer:** A dedicated Flux controller that watches Git repositories, Helm charts, and S3 buckets for changes and produces artifact archives for other controllers.
+
+### **189. What is FluxCD Kustomize Controller?**
+**Answer:** A Flux controller that takes artifacts from the Source Controller, generates Kubernetes manifests via Kustomize, and applies them to the cluster.
+
+### **190. What is FluxCD Notification Controller?**
+**Answer:** A Flux controller that handles inbound webhooks from Git providers and dispatches outbound event notifications to Slack, MS Teams, and Discord.
+
+### **191. What is Tekton PipelineRun?**
+**Answer:** A Custom Resource that instantiates and executes a `Pipeline` on a Kubernetes cluster, binding concrete parameters and workspaces.
+
+### **192. What is Tekton TaskRun?**
+**Answer:** A Custom Resource that instantiates and executes a single `Task` inside a Kubernetes pod composed of sequential container steps.
+
+### **193. What is a Matrix Job in GitLab CI?**
+**Answer:** Using the `parallel: matrix:` keyword in `.gitlab-ci.yml` to run multiple job variations across defined variables concurrently.
+
+### **194. What is a Pipeline Secret Store CSI Driver?**
+**Answer:** Mounting secrets stored in enterprise vaults directly into Kubernetes pods as in-memory files without persisting them as Kubernetes Secret objects.
+
+### **195. What is a Zero-Downtime Database Migration sequence in CI/CD?**
+**Answer:** 1. Add nullable columns (Expand), 2. Deploy app writing to both old and new columns, 3. Backfill data, 4. Deploy app reading from new column, 5. Drop old columns (Contract).
+
+### **196. What is In-Tree vs Out-of-Tree CI Plugins?**
+**Answer:** In-tree plugins are compiled directly into the core CI engine; Out-of-tree plugins are external community actions downloaded dynamically at runtime.
+
+### **197. What is Action Pinning in GitHub Actions?**
+**Answer:** Pinning third-party actions to full commit SHAs (`uses: actions/setup-node@60edb5...`) rather than mutable tags (`@v4`) to protect against supply chain attacks.
+
+### **198. What is Hermetic Container Building with Kaniko?**
+**Answer:** Executing container image builds inside an isolated pod with no host Docker socket mount, pushing directly to an OCI registry.
+
+### **199. What is a Pipeline Flakiness Rate?**
+**Answer:** The percentage of pipeline runs that fail due to unstable tests or network timeouts rather than actual code defects, eroding developer trust.
+
+### **200. What is Progressive Delivery Automated Metric Gating?**
+**Answer:** Evaluating real-time Prometheus golden signal telemetry during canary deployments to autonomously promote or abort releases without human intervention.
